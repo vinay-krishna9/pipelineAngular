@@ -1,0 +1,167 @@
+<div class="revenue-container">
+  <div class="revenue-select" *ngIf="revenueData">
+    <select
+      (change)="yearMovies($event.target.value)"
+      [(ngModel)]="currentYear"
+    >
+      <option *ngFor="let year of listYears" [value]="year">{{ year }}</option>
+    </select>
+  </div>
+  <div class="revenue-chart">
+    <kendo-chart>
+      <kendo-chart-title
+        text="Revenue ({{ currentYear }})"
+        font="bold 18px Arial, sans-serif"
+        color="lightGray"
+      ></kendo-chart-title>
+
+      <kendo-chart-value-axis>
+        <kendo-chart-value-axis-item [title]="{ text: 'Revenue  ($)' }">
+          <kendo-chart-value-axis-item-labels [content]="revenuelabelContent">
+          </kendo-chart-value-axis-item-labels>
+        </kendo-chart-value-axis-item>
+      </kendo-chart-value-axis>
+
+      <kendo-chart-category-axis>
+        <kendo-chart-category-axis-item
+          [title]="{ text: 'Movies' }"
+          [categories]="revenueLabels"
+          [labels]="revenueXLabels"
+        >
+        </kendo-chart-category-axis-item>
+      </kendo-chart-category-axis>
+
+      <kendo-chart-area background="#000" height="400" [margin]="30">
+      </kendo-chart-area>
+
+      <kendo-chart-series>
+        <kendo-chart-series-item
+          type="bar"
+          [gap]="0.5"
+          [data]="revenueData"
+          color="rgba(0, 181, 204, 0.4)"
+        >
+        </kendo-chart-series-item>
+      </kendo-chart-series>
+    </kendo-chart>
+  </div>
+</div>
+<!-- ============================================================================= -->
+<div class="genre-container">
+  <div class="genre-select" *ngIf="movieCountData">
+    <select (change)="genreMovieCount($event.target.value)">
+      <option value="0">All Genres</option>
+      <option *ngFor="let genre of listGenres" [value]="genre.id">
+        {{ genre.name }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <kendo-chart class="genre-chart">
+      <kendo-chart-title
+        text="{{ currentGenre }} Movies Released (Yearly)"
+        font="bold 18px Arial, sans-serif"
+        color="lightGray"
+      ></kendo-chart-title>
+
+      <kendo-chart-value-axis>
+        <kendo-chart-value-axis-item [title]="{ text: 'Number of Movies' }">
+          <kendo-chart-value-axis-item-labels>
+          </kendo-chart-value-axis-item-labels>
+        </kendo-chart-value-axis-item>
+      </kendo-chart-value-axis>
+
+      <kendo-chart-category-axis>
+        <kendo-chart-category-axis-item
+          [categories]="movieCountLabels"
+          [labels]="revenueXLabels"
+          [title]="{ text: 'Years' }"
+        >
+        </kendo-chart-category-axis-item>
+      </kendo-chart-category-axis>
+
+      <kendo-chart-area background="#000" height="400" [margin]="30">
+      </kendo-chart-area>
+
+      <kendo-chart-series>
+        <kendo-chart-series-item
+          type="line"
+          [data]="movieCountData"
+          color="rgba(255, 47, 0, 0.9)"
+        >
+        </kendo-chart-series-item>
+      </kendo-chart-series>
+    </kendo-chart>
+  </div>
+</div>
+<br />
+<!-- ============================================================================= -->
+<div class="genre-container">
+  <div class="popularity-select-1">
+    <select (change)="popularityGenre1($event.target.value)">
+      <option
+        *ngFor="let genre of listGenres"
+        [selected]="genre.name == 'Music'"
+        [value]="genre.id"
+      >
+        {{ genre.name }}
+      </option>
+    </select>
+  </div>
+  <div class="popularity-select-2">
+    <select (change)="popularityGenre2($event.target.value)">
+      <option
+        *ngFor="let genre of listGenres"
+        [selected]="genre.name == 'History'"
+        [value]="genre.id"
+      >
+        {{ genre.name }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <kendo-chart class="genre-chart">
+      <kendo-chart-title
+        text="Popularity of {{ currentPopulartiy1Genre }} and {{
+          currentPopulartiy2Genre
+        }} Movies (Yearly)"
+        font="bold 18px Arial, sans-serif"
+        color="lightGray"
+      ></kendo-chart-title>
+
+      <kendo-chart-value-axis>
+        <kendo-chart-value-axis-item [title]="{ text: 'Popularity of Genres' }">
+          <kendo-chart-value-axis-item-labels>
+          </kendo-chart-value-axis-item-labels>
+        </kendo-chart-value-axis-item>
+      </kendo-chart-value-axis>
+
+      <kendo-chart-category-axis>
+        <kendo-chart-category-axis-item
+          [categories]="popularityLabels"
+          [labels]="revenueXLabels"
+          [title]="{ text: 'Years' }"
+        >
+        </kendo-chart-category-axis-item>
+      </kendo-chart-category-axis>
+
+      <kendo-chart-area background="#000" height="400" [margin]="30">
+      </kendo-chart-area>
+
+      <kendo-chart-series>
+        <kendo-chart-series-item
+          type="line"
+          [data]="popularityData1"
+          color="rgba(51, 156, 255 ,0.7)"
+        >
+        </kendo-chart-series-item>
+        <kendo-chart-series-item
+          type="line"
+          [data]="popularityData2"
+          color="rgba(243, 0, 255 ,0.7)"
+        >
+        </kendo-chart-series-item>
+      </kendo-chart-series>
+    </kendo-chart>
+  </div>
+</div>
